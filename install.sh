@@ -4,13 +4,30 @@
 
 set -e
 
-if [ $(id -u) -ne 0 ]; then
-  echo 1>&2
-  echo "Installation requires root privileges." 1>&2
-  echo "Please run it again with \`sudo\`" 1>&2
-  echo 1>&2
+is_sudo_present=true
+sudo > /dev/null 2>&1 || is_sudo_present=false
 
-  exit 1
+if [ "$(id -u)" -ne 0 ]; then
+  if $is_sudo_present; then
+    echo 1>&2
+    echo "Installation requires root privileges." 1>&2
+    echo "Please run it again with \`sudo\`" 1>&2
+    echo 1>&2
+
+    exit 1
+  else
+    is_running_as_admin=true
+    touch "${HOME}/../.elevated" > /dev/null 2>&1 || is_running_as_admin=false
+
+    if ! $is_running_as_admin; then
+      echo 1>&2
+      echo "Installation requires administrator privileges." 1>&2
+      echo "Please run it again as administrator." 1>&2
+      echo 1>&2
+
+      exit 1
+    fi
+  fi
 fi
 
 if [ -z "${OPENAI_TOKEN}" ]; then
@@ -38,7 +55,13 @@ executable_name="promptsh"
 
 source_filename="${executable_name}.sh"
 source_path="$(pwd)/${source_filename}"
+
 installation_dir="/usr/local/bin"
+
+if [ ! -d "${installation_dir}" ]; then
+  installation_dir="/usr/bin"
+fi
+
 installation_path="${installation_dir}/${executable_name}"
 
 if [ ! -f "${source_path}" ]; then

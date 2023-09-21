@@ -1,4 +1,4 @@
-# Prompt **Sh**ell
+# **Prompt** **Sh**ell
 
 _aka_ `promptsh`
 
@@ -30,12 +30,23 @@ Written in pure Bash, **no** dependencies required.
 
 ## How to install
 
-```bash
-curl -fsSL "https://raw.githubusercontent.com/Danand/promptsh/main/install.sh" \
-| $(test $(id -u) -ne 0 && echo -n "sudo" || echo -n) \
-OPENAI_TOKEN="${OPENAI_TOKEN}" \
-bash
-```
+- **MINGW64**:
+  1. Run **Git Bash**/**MINGW64** as Administrator.
+  2. Run the following command:
+
+     ```bash
+     curl -fsSL "https://raw.githubusercontent.com/Danand/promptsh/main/install.sh" | bash
+     ```
+
+- Other terminals (requires `sudo`):
+  1. Launch Terminal as usual.
+  2. Run the following command:
+
+     ```bash
+     curl -fsSL "https://raw.githubusercontent.com/Danand/promptsh/main/install.sh" | sudo bash
+     ```
+
+  3. You will be prompted for superuser password.
 
 ## How to use
 
