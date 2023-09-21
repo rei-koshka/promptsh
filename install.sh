@@ -47,6 +47,9 @@ if [ -z "${OPENAI_TOKEN}" ]; then
   echo "How to to that (Linux):" 1>&2
   echo "echo 'export OPENAI_TOKEN=\"your-key-here\"' >> ~/.bashrc && source ~/.bashrc" 1>&2
   echo 1>&2
+  echo "Retry install:" 1>&2
+  echo 'sudo OPENAI_TOKEN=${OPENAI_TOKEN} ./install.sh' 1>&2
+  echo 1>&2
 
   exit 1
 fi
@@ -56,12 +59,7 @@ executable_name="promptsh"
 source_filename="${executable_name}.sh"
 source_path="$(pwd)/${source_filename}"
 
-installation_dir="/usr/local/bin"
-
-if [ ! -d "${installation_dir}" ]; then
-  installation_dir="/usr/bin"
-fi
-
+installation_dir="/usr/bin"
 installation_path="${installation_dir}/${executable_name}"
 
 if [ ! -f "${source_path}" ]; then
