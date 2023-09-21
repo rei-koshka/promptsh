@@ -35,7 +35,8 @@ Written in pure Bash, **no** dependencies required.
   2. Run the following command:
 
      ```bash
-     curl -fsSL "https://raw.githubusercontent.com/Danand/promptsh/main/install.sh" | bash
+     curl -fsSL "https://raw.githubusercontent.com/Danand/promptsh/main/install.sh" \
+     | bash
      ```
 
 - Other terminals (requires `sudo`):
@@ -43,7 +44,8 @@ Written in pure Bash, **no** dependencies required.
   2. Run the following command:
 
      ```bash
-     curl -fsSL "https://raw.githubusercontent.com/Danand/promptsh/main/install.sh" | sudo bash
+     curl -fsSL "https://raw.githubusercontent.com/Danand/promptsh/main/install.sh" \
+     | OPENAI_TOKEN="${OPENAI_TOKEN}" sudo bash
      ```
 
   3. You will be prompted for superuser password.
