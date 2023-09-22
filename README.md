@@ -45,7 +45,7 @@ Written in pure Bash, **no** dependencies required.
 
      ```bash
      curl -fsSL "https://raw.githubusercontent.com/Danand/promptsh/main/install.sh" \
-     | OPENAI_TOKEN="${OPENAI_TOKEN}" sudo bash
+     | sudo OPENAI_TOKEN="${OPENAI_TOKEN}" bash
      ```
 
   3. You will be prompted for superuser password.

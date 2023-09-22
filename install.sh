@@ -50,10 +50,10 @@ if [ -z "${OPENAI_TOKEN}" ]; then
   echo "echo 'export OPENAI_TOKEN=\"your-key-here\"' >> ~/.bashrc && source ~/.bashrc" 1>&2
   echo 1>&2
   echo "Retry install:" 1>&2
-  echo 'sudo OPENAI_TOKEN=${OPENAI_TOKEN} ./install.sh' 1>&2
+  echo 'curl -fsSL "https://raw.githubusercontent.com/Danand/promptsh/main/install.sh" | sudo OPENAI_TOKEN="${OPENAI_TOKEN}" bash' 1>&2
   echo 1>&2
   echo "Or retry update:" 1>&2
-  echo 'sudo OPENAI_TOKEN=${OPENAI_TOKEN} ./promptsh.sh --update' 1>&2
+  echo 'sudo OPENAI_TOKEN=${OPENAI_TOKEN} promptsh --update' 1>&2
   echo 1>&2
 
   exit 1
