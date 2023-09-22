@@ -2,6 +2,16 @@
 #
 # Simple script for executing answers from ChatGPT as Bash commands.
 
+if [ ! -v NO_COLOR ]; then
+  COLOR_RED='\e[31m'
+  COLOR_BLUE='\e[34m'
+  COLOR_GREEN='\e[32m'
+  COLOR_YELLOW='\e[33m'
+  COLOR_BOLD='\e[1m'
+  COLOR_DIM='\e[2m'
+  COLOR_CLEAR='\e[0m'
+fi
+
 function __prepare_prompt() {
   local command="$1"
   local shell="$2"
@@ -24,9 +34,9 @@ function __prepare_prompt() {
   fi
 
   if [ "${PROMPTSH_DEBUG}" == "1" ]; then
-    echo -en "\033[3mPrompt:\n" 1>&2
+    echo -en "${COLOR_DIM}Prompt:\n" 1>&2
     echo -n "${prompt}" 1>&2
-    echo -en "\033[0m\n\n" 1>&2
+    echo -en "${COLOR_CLEAR}\n\n" 1>&2
   fi
 
   echo "${prompt}"
@@ -58,7 +68,7 @@ function __execute() {
     completion="$(cat "${completion_cache_path}")"
 
     if [ "${PROMPTSH_DEBUG}" == "1" ]; then
-      echo -en "\033[33mGot completion from cache at key ${completion_hash}:\n\033[1m${completion}\033[0m\n\n" 1>&2
+      echo -en "${COLOR_BLUE}Got completion from cache at key ${completion_hash}:\n${COLOR_BOLD}${completion}${COLOR_CLEAR}\n\n" 1>&2
     fi
   else
     local model="gpt-3.5-turbo"
@@ -92,11 +102,11 @@ function __execute() {
     )"
 
     if [ "${PROMPTSH_DEBUG}" == "1" ]; then
-      echo -en "\033[31mCompletion was not found in cache\n\nRequest to OpenAI API:\n\033[1m" 1>&2
+      echo -en "${COLOR_YELLOW}Completion was not found in cache\n\nRequest to OpenAI API:\n${COLOR_BOLD}" 1>&2
       echo -n "${post_data}" 1>&2
-      echo -en "\033[0m\n\nResponse from OpenAI API:\n\033[1m" 1>&2
+      echo -en "${COLOR_CLEAR}\n\nResponse from OpenAI API:\n${COLOR_BOLD}" 1>&2
       echo -n "${response}" 1>&2
-      echo -en "\033[0m\n\n" 1>&2
+      echo -en "${COLOR_CLEAR}\n\n" 1>&2
     fi
 
     completion=$(echo "$response" | jq -r '.choices[0].message.content')
@@ -105,10 +115,10 @@ function __execute() {
       error=$(echo "$response" | jq -r '.error.message')
 
       if [ "${error}" == "null" ]; then
-        echo -e "\033[31mUnknown error occured, you can retry run with PROMPTSH_DEBUG=1\033[0m" 1>&2
+        echo -e "${COLOR_RED}Unknown error occured, you can retry run with PROMPTSH_DEBUG=1${COLOR_CLEAR}" 1>&2
       else
         echo 1>&2
-        echo -e "\033[31m${error}\033[0m" 1>&2
+        echo -e "${COLOR_RED}{error}${COLOR_CLEAR}" 1>&2
         echo 1>&2
       fi
 
@@ -119,7 +129,7 @@ function __execute() {
   fi
 
   if ! $is_interactive; then
-    echo -en "\033[32m${completion}\033[0m\n\n" 1>&2
+    echo -en "${COLOR_GREEN}${completion}${COLOR_CLEAR}\n\n" 1>&2
   fi
 
   if [ "${shell}" == "none" ]; then
