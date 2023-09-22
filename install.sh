@@ -5,7 +5,7 @@
 set -e
 
 is_sudo_present=true
-sudo > /dev/null 2>&1 || is_sudo_present=false
+sudo -V > /dev/null 2>&1 || is_sudo_present=false
 
 if [ "$(id -u)" -ne 0 ]; then
   if $is_sudo_present; then
@@ -30,6 +30,8 @@ if [ "$(id -u)" -ne 0 ]; then
   fi
 fi
 
+# shellcheck disable=SC2016
+
 if [ -z "${OPENAI_TOKEN}" ]; then
   echo "Installation requires OpenAI API key." 1>&2
   echo 1>&2
@@ -49,6 +51,9 @@ if [ -z "${OPENAI_TOKEN}" ]; then
   echo 1>&2
   echo "Retry install:" 1>&2
   echo 'sudo OPENAI_TOKEN=${OPENAI_TOKEN} ./install.sh' 1>&2
+  echo 1>&2
+  echo "Or retry update:" 1>&2
+  echo 'sudo OPENAI_TOKEN=${OPENAI_TOKEN} ./promptsh.sh --update' 1>&2
   echo 1>&2
 
   exit 1

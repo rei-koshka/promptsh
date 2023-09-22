@@ -52,20 +52,22 @@ Written in pure Bash, **no** dependencies required.
 
 ## How to use
 
-Just type commands prepending with `promptsh`:
+```bash
+$ promptsh --help
 
-```log
-$ promptsh init repo
-git init
+Simple script for executing answers from ChatGPT as Bash commands.
 
-Initialized empty Git repository in /home/user/promptsh/.git/
+  Commands:
 
-$ promptsh add changes and commit
-git add . && git commit -m "Commit changes"
+      -h | --help                       Prints this message.
+      --update                          Updates this script to the latest.
 
-[main (root-commit) 15e69a8] Commit changes
- 3 files changed, 154 insertions(+)
- create mode 100644 README.md
- create mode 100755 install.sh
- create mode 100755 promptsh.sh
+  Parameters:
+
+      -c | --command        [prompt]    Given prompt.
+      -x | --shell          [shell]     Specifies shell for execution of command.
+      -s | --stdin                      Enables reading context from `stdin`
+      -i | --interactive                Let user edit received command.
+                                        Use `none` for non-code prompts.
+                                        Default: `bash`
 ```
