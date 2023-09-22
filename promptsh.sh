@@ -138,9 +138,18 @@ function __execute() {
     if $is_interactive; then
       PS1='$ '
 
+      command=""
+
+      if [ "${shell}" == "bash" ]; then
+        command="${completion}"
+      else
+        completion_escaped="${completion//\'/\'\\\'\'}"
+        command="echo '${completion_escaped}' | ${shell}"
+      fi
+
       read \
         -er \
-        -i "echo '${completion}' | ${shell}" \
+        -i "${command}" \
         -p "${PS1@P}" \
         input
 
